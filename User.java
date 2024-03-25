@@ -31,4 +31,18 @@ public class User {
         upvoted = new ArrayList<Post>();
         downvoted = new ArrayList<Post>();
     }
+    /**
+     * This method adds a post to the users array of posts.
+     * 
+     * @param post the post that will be added to the user.
+     */
+    public void addPost(Post post){
+        if (post == null){
+            return;
+        }
+        else {
+            posts.add(post);
+            updateKarma();
+        }
+    }
 }
