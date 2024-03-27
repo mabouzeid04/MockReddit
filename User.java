@@ -104,5 +104,72 @@ public class User {
         post.getAuthor().updateKarma();
     }
 
+    /**
+     * This method allows a user to downvote a post.
+     * 
+     * @param post the post that is downvoted.
+     */
+    public void downvote(Post post){
+        if (post == null){
+            return;
+        }
+        boolean upvotedByUser = false;
+        boolean downvotedByUser = false;
+
+        for (int i = 0; i < downvoted.size(); i++){
+            if (post == downvoted.get(i)){
+                downvotedByUser = true;
+            }
+        }
+        if ((post.getAuthor() == this) || (downvotedByUser)) {
+            return;
+        }
+        // finds out if post was upvoted by user already.
+        for (int i = 0; i < upvoted.size(); i++){
+            if (post == upvoted.get(i)){
+                upvotedByUser = true;
+            }
+        }
+
+        // removes upvote if applicable.
+        if (upvotedByUser){
+            post.updateUpvoteCount(false);
+            upvoted.remove(post);
+        }
+
+        // updates downvotes on the post and adds it to the downvoted array
+        downvoted.add(post);
+        post.updateDownvoteCount(true);
+        post.getAuthor().updateKarma();
+    }
+
+    /**
+     * This method finds and returns the users top post.
+     * 
+     * @return returns the users top post.
+     */
+    public Post getTopPost(){ 
+        if ((posts == null) || (posts.size() == 0)){
+            return null;
+        }
+
+        int maxVotes = Integer.MIN_VALUE;
+        Post topPost = posts.get(0);
+        for (int i = 0; i < posts.size(); i++){
+            if (posts.get(i).getTitle() != null) { // ensures theres a title. 
+                if (posts.get(i).getUpvoteCount()
+                    - posts.get(i).getDownvoteCount() > maxVotes){
+                    maxVotes = posts.get(i).getUpvoteCount()
+                        - posts.get(i).getDownvoteCount();
+                    topPost = posts.get(i);
+                }
+            }       
+        }
+        return topPost;
+    }
+
+    
+
+
 
 }

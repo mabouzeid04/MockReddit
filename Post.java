@@ -126,5 +126,45 @@ public class Post {
         }
     }
 
-    
+    /**
+     * This getter method returns the thread of the post.
+     * 
+     * @return returns the thread of posts before this one.
+     */
+    public ArrayList<Post> getThread(){
+        ArrayList<Post> thread = new ArrayList<Post>();
+        boolean comment = false;
+        if (this.getTitle() == null) {
+            comment = true;
+        }
+
+        Post currentPost = this; // this actually refers to the current post
+
+        while (comment) {
+            thread.add(0, currentPost);
+            currentPost = currentPost.getReplyTo();
+            if (currentPost.getTitle() != null){
+                comment = false;
+            }
+        }
+        
+        thread.add(0, currentPost);
+        
+        return thread;
+    }
+
+    /**
+     * This method puts the post in string format.
+     * @return returns a string of the post.
+     */
+    public String toString(){
+        if (title == null){
+            return "[" + upvoteCount + "|" + downvoteCount + "]" +
+                "\t" + content;
+        }
+        else {
+            return "[" + upvoteCount + "|" + downvoteCount +
+                "]" + "\t" + title + "\n" + "\t" + content;
+        }
+    } 
 }
