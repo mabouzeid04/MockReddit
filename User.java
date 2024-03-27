@@ -45,4 +45,64 @@ public class User {
             updateKarma();
         }
     }
+
+    /**
+     * This method updates the users karma.
+     */
+    public void updateKarma(){
+        karma = 0;
+        for (int i = 0; i < posts.size(); i++){
+            karma += (posts.get(i).getUpvoteCount()
+                - posts.get(i).getDownvoteCount());
+        }
+    }
+
+    /**
+     * This getter method returns the karma of the user.
+     * 
+     * @return returns the karma of user.
+     */
+    public int getKarma(){
+        return karma;
+    }
+
+    /**
+     * This method allows a user to upvote a post.
+     * 
+     * @param post the post that is upvoted
+     */
+    public void upvote(Post post){
+        if (post == null){
+            return;
+        }
+        boolean upvotedByUser = false;
+        boolean downvotedByUser = false;
+        for (int i = 0; i < upvoted.size(); i++){
+            if (post == upvoted.get(i)){
+                upvotedByUser = true;
+            }
+        }
+        // returns if user is author or they already upvoted.
+        if ((post.getAuthor() == this) || (upvotedByUser)) {
+            return;
+        }
+
+        for (int i = 0; i < downvoted.size(); i++){
+            if (post == downvoted.get(i)){
+                downvotedByUser = true;
+            }
+        }
+        
+        // removes downvote if applicable.
+        if (downvotedByUser){
+            post.updateDownvoteCount(false);
+            downvoted.remove(post);
+        }
+        // updates upvotes on the post and adds it to the upvoted array
+        upvoted.add(post);
+        post.updateUpvoteCount(true);
+        post.getAuthor().updateKarma();
+    }
+
+
 }

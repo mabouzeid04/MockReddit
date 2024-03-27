@@ -18,7 +18,6 @@ public class Post {
     private int upvoteCount;
     private int downvoteCount;
 
-
     /** 
      * This constructor initializes the posts
      * 
@@ -95,6 +94,36 @@ public class Post {
      */
     public int getDownvoteCount(){
         return downvoteCount;
+    }
+
+    /**
+     * This method updates the upvote count of a post.
+     * 
+     * @param isIncrement whether the upvote count should
+     *  be incremented or decremented.
+     */
+    public void updateUpvoteCount(boolean isIncrement){
+        if (isIncrement){
+            upvoteCount++;
+        }
+        else {
+            upvoteCount--;
+        }
+    }
+
+    /**
+     * This method updates the downvote count of a post.
+     * 
+     * @param isIncrement whether the downvote count should
+     *  be incremented or decremented.
+     */
+    public void updateDownvoteCount(boolean isIncrement){
+        if (isIncrement){
+            downvoteCount++;
+        }
+        else {
+            downvoteCount--;
+        }
     }
 
     
