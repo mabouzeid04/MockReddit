@@ -168,8 +168,45 @@ public class User {
         return topPost;
     }
 
-    
+    /**
+     * This method finds and returns the users top comment.
+     * 
+     * @return returns the top comment.
+     */
+    public Post getTopComment(){ 
 
+        int maxVotes = Integer.MIN_VALUE;
+        Post topComment = null;
 
+        for (int i = 0; i < posts.size(); i++){
+            if (posts.get(i).getTitle() == null) {
+                if (posts.get(i).getUpvoteCount() 
+                    - posts.get(i).getDownvoteCount() > maxVotes){
+                    maxVotes = posts.get(i).getUpvoteCount()
+                        - posts.get(i).getDownvoteCount();
+                    topComment = posts.get(i);
+                }
+            }
+        }
+        return topComment;
+    }
+
+    /**
+     * This getter method returns the users posts.
+     * 
+     * @return returns an arrayList of the users posts.
+     */
+    public ArrayList<Post> getPosts(){
+        return posts;
+    }
+
+    /**
+     * This method puts the users details in a string format.
+     * 
+     * @return returns a string of the user.
+     */
+    public String toString(){ 
+        return "u/" + username + " Karma: " + karma;
+    }
 
 }
